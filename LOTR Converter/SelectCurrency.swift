@@ -8,13 +8,37 @@
 import SwiftUI
 
 struct SelectCurrency: View {
+    @Environment(\.dismiss) var dismiss //for button
+    @Binding var leftCurrency:Currency
+    @Binding var rightCurrency:Currency
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+            Image("parchment").resizable().background(.brown).edgesIgnoringSafeArea(.all)
+            
+            VStack{
+                Text("Select the currency you are starting with:").fontWeight(.bold).multilineTextAlignment(.center)
+                
+                IconGrid(currency: $leftCurrency) // $ sign is to bind
+                
+                
+                Text("Select the currency you would like to convert to:").fontWeight(.bold).multilineTextAlignment(.center)
+                
+                IconGrid(currency: $rightCurrency)
+                
+                Button("done"){
+                    dismiss()
+                }.padding(10).foregroundColor(.white).background(.brown).cornerRadius(10.0)
+            }
+        }
     }
 }
 
 struct SelectCurrency_Previews: PreviewProvider {
     static var previews: some View {
-        SelectCurrency()
+        SelectCurrency(
+            leftCurrency: .constant(.silverPiece),
+            rightCurrency: .constant(.goldPiece)
+        )
     }
 }
